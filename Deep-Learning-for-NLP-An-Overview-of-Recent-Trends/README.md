@@ -35,4 +35,11 @@
 
 词嵌入方法的挑战之一是当我们想要获得诸如“hot potato”或“Boston Globe”之类的短语的向量表示时，我们不能简单地组合单个单词向量表示，因为这些短语并不代表单个词的含义组合。当考虑更长的短语和句子时，它会变得更加复杂。
 
-word2vec模型的另一个限制则是当使用较小的窗口大小时，对于像“good”和“bad”这样的反义词，会产生相似的embeddings，这对于对这种区分很重要的任务是不可取的，例如情感分析。
+word2vec模型的另一个限制则是当使用较小的窗口大小时，对于像“good”和“bad”这样的反义词，会产生相似的embeddings，这对于对这种区分很重要的任务是不可取的，例如情感分析。词嵌入的另一个警告是它们依赖于使用它们的应用。为每个新任务重新训练任务特定的embeddings是一个探索性的选择，但这通常计算昂贵，并且能使用[负采样](http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/)更有效地解决。Word2vec模型还存在其他问题，例如没有考虑词的[多义性](https://en.wikipedia.org/wiki/Polysemy)，以及其他可能从训练数据中浮现的偏见。
+
+**字符嵌入**：对于像[词性标注](https://en.wikipedia.org/wiki/Part-of-speech_tagging)（**POS**）和[命名实体识别](https://en.wikipedia.org/wiki/Named-entity_recognition)（**NER**）等任务，查看单词中的形态信息（例如字符或其组合）是很有用的。这对于形式丰富的语言也很有用，例如葡萄牙语、西班牙语和中文。由于我们在字符级别分析分文，这种类型的embeddings有助于处理未登录词问题，因为在这之前我们需要很大的词汇表来表示句子，而为了高效计算的目的我们还得压缩词汇表，现在我们不需要这么做。
+
+最后，我们要理解很重要的一点是，尽管字符级和词级嵌入都已被成功应用于各种NLP任务，但它的长期影响仍受到质疑。例如，[Lucy and Gauthier](https://arxiv.org/abs/1705.11168)最近发现，词向量在如何很好地捕获单词背后概念意义的不同方面这点上是受限的。换句话说，仅有分布式语义，并不能用于理解单词背后的概念。最近，在自然语言处理系统的背景下，对意义表征进行了[重要的辩论](https://medium.com/huggingface/learning-meaning-in-natural-language-processing-the-semantics-mega-thread-9c0332dfe28e)。
+
+## 卷积神经网络（CNN）
+
