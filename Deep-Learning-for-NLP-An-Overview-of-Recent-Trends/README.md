@@ -43,3 +43,21 @@ word2vec模型的另一个限制则是当使用较小的窗口大小时，对于
 
 ## 卷积神经网络（CNN）
 
+CNN基本上是一个基于神经的方法，其表示用于构成单词或n-grams的特征函数，以提取更高级的特征。由此产生的抽象特征已被有效地用于情感分析，机器翻译和问答，以及其他任务。[Collobert and Weston](https://ronan.collobert.com/pub/matos/2008_nlp_icml.pdf)是首批将基于CNN的框架应用于NLP任务的研究人员之一。他们方法的目标是通过查找表将单词转换为向量表示，从而产生一种原始词嵌入方法，在网络训练期间学习权重（见下图）：
+
+![CNN](image2.png)
+
+为了用基本的CNN进行句子建模，首先将句子tokenize为单词，然后将其进一步变为`d`维的词嵌入矩阵（例如输入embedding层）。然后，在该输入embedding层上应用卷积filters，其包括应用所有可能窗口大小的filters以产生所谓的特征映射（feature-map）。然后进行最大池化（max-pooling）操作，即对每个filter应用max操作以获得固定长度的输出并减小输出的维度，这样便产生了最终的句子表示。
+
+![CNN for sentence classification](image3.png)
+
+通过增加上述基本CNN的复杂度，并使其适用于基于词的预测，可以研究如NER、[aspect detection](https://link.springer.com/chapter/10.1007/978-3-642-38824-8_12)、POS等其他NLP任务。这需要基于窗口的方法，其对于每个单词只考虑固定窗口大小的相邻单词（sub-sentence）。然后将单独的CNN应用于sub-sentence，而且其训练目标就是预测窗口中心的单词，这也被称为单词级别的分类。
+
+基本CNN的一个缺点是无法建模长距离依赖关系，而这关系对于各种NLP任务则是相当重要的。为了解决该问题，CNNs已与时间延时神经网络（TDNN）结合，后者能在训练期间立刻获得更大的上下文范围。其他有用的CNN变体已在不同的NLP任务中取得成功，例如情感预测和问题类型分类，被称为动态卷积神经网络（DCNN）。DCNN使用动态的k-max池化策略，其filters可以在句子建模时动态地跨越可变的范围。
+
+CNNs也已被用于更复杂的任务，其文本是变长的，例如aspect detection、[情感分析](https://arxiv.org/abs/1609.02748)、[短文本分类](http://www.aclweb.org/anthology/P15-2058)、[讽刺识别](https://medium.com/dair-ai/detecting-sarcasm-with-deep-convolutional-neural-networks-4a0657f79e80)。然而这其中的一些研究报告说，在将基于CNN的方法应用于Twitter等微缩文本时，外部知识是必要的。其他CNN已证明有效的任务是[查询-文档匹配](http://acl2014.org/acl2014/P14-2/pdf/P14-2105.pdf)、语音识别、机器翻译、问答表示等。另一方面，DCNN被用于自动文本摘要，分层学习以捕获并组合低级词汇特征为高级语义概念。
+
+总体而言，CNN是有效的，因为它们可以在上下文窗口中挖据语义线索，但是它们难以保持序列顺序和建模长距离上下文信息。循环模型更适合这种类型的学习，接下来将对它们进行探讨。
+
+## 循环神经网络（RNN）
+
