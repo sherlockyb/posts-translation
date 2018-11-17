@@ -7,6 +7,19 @@
 
 **目录**
 
+* [NLP深度学习：近期趋势概述](#nlp%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%BF%91%E6%9C%9F%E8%B6%8B%E5%8A%BF%E6%A6%82%E8%BF%B0)
+  * [什么是NLP](#%E4%BB%80%E4%B9%88%E6%98%AFnlp)
+  * [分布式表示](#%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA)
+  * [卷积神经网络（CNN）](#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Ccnn)
+  * [循环神经网络（RNN）](#%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Crnn)
+  * [注意力机制](#%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6)
+  * [递归神经网络](#%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)
+  * [强化学习](#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0)
+  * [无监督学习](#%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0)
+  * [深度生成模型](#%E6%B7%B1%E5%BA%A6%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B)
+  * [记忆增强网络](#%E8%AE%B0%E5%BF%86%E5%A2%9E%E5%BC%BA%E7%BD%91%E7%BB%9C)
+  * [总结](#%E6%80%BB%E7%BB%93)
+
 在最近的新[论文](https://arxiv.org/abs/1708.02709)中，Young及其同事探讨了在基于深度学习的自然语言处理（NLP）系统和应用中的一些最新趋势。论文重点回顾和比较了已经在各种NLP任务如[视觉问答](https://tryolabs.com/blog/2018/03/01/introduction-to-visual-question-answering/)和[机器翻译](https://en.wikipedia.org/wiki/Machine_translation)等中取得了**state-of-the-art**结果的模型和方法。在这篇全面的综述中，读者将详细了解到深度学习在NLP中的过去、现在和未来。此外，读者还会学习到在NLP中应用深度学习的一些最佳实践，包含如下主题：
 
 - 分布式表示的兴起（例如，word2vec）
@@ -27,7 +40,7 @@
 
 **词嵌入**：分布式向量，也称为词嵌入，基于所谓的[分布式假设](https://en.wikipedia.org/wiki/Distributional_semantics)——出现在类似语境中的词具有相似的含义。词嵌入是在目标为基于一个词的上下文预测该单词的任务上预训练的，通常使用浅层神经网络。下图说明了[Bengio及其同事](http://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf)提出的神经语言模型：
 
-![neural language model](image1.png)
+![neural language model](images/image1.png)
 
 词向量倾向于嵌入语法和语义信息，并在各种NLP任务中负责**SOTA**（state of the art）,例如[情感分析](https://en.wikipedia.org/wiki/Sentiment_analysis)和句子组成。
 
@@ -47,11 +60,11 @@ word2vec模型的另一个限制则是当使用较小的窗口大小时，对于
 
 CNN基本上是一个基于神经的方法，其表示用于构成单词或n-grams的特征函数，以提取更高级的特征。由此产生的抽象特征已被有效地用于情感分析，机器翻译和问答，以及其他任务。[Collobert and Weston](https://ronan.collobert.com/pub/matos/2008_nlp_icml.pdf)是首批将基于CNN的框架应用于NLP任务的研究人员之一。他们方法的目标是通过查找表将单词转换为向量表示，从而产生一种原始词嵌入方法，在网络训练期间学习权重（见下图）：
 
-![CNN](image2.png)
+![CNN](images/image2.png)
 
 为了用基本的CNN进行句子建模，首先将句子tokenize为单词，然后将其进一步变为`d`维的词嵌入矩阵（例如输入embedding层）。然后，在该输入embedding层上应用卷积filters，其包括应用所有可能窗口大小的filters以产生所谓的特征映射（feature-map）。然后进行最大池化（max-pooling）操作，即对每个filter应用max操作以获得固定长度的输出并减小输出的维度，这样便产生了最终的句子表示。
 
-![CNN for sentence classification](image3.png)
+![CNN for sentence classification](images/image3.png)
 
 通过增加上述基本CNN的复杂度，并使其适用于基于词的预测，可以研究如NER、[aspect detection](https://link.springer.com/chapter/10.1007/978-3-642-38824-8_12)、POS等其他NLP任务。这需要基于窗口的方法，其对于每个单词只考虑固定窗口大小的相邻单词（sub-sentence）。然后将单独的CNN应用于sub-sentence，而且其训练目标就是预测窗口中心的单词，这也被称为单词级别的分类。
 
@@ -65,7 +78,7 @@ CNNs也已被用于更复杂的任务，其文本是变长的，例如aspect det
 
 RNN是一种特殊的基于神经的方法，能有效处理序列信息。RNN递归地计算输入序列的每一个实例，并且计算时以先前计算的结果为条件输入。这些序列通常由token的固定大小的向量组成，这些向量被按序地（逐个）传入循环单元。下图说明了一个简单RNN框架：
 
-![sample RNN](image4.png)
+![sample RNN](images/image4.png)
 
 RNN的主要优势在于能记忆先前计算的结果并在当前计算中使用该信息。这使得RNN模型适合于对任意长度的输入中的上下文关系进行建模，以便创建inputs的适当组合。RNN已被用于研究各种NLP任务，例如机器翻译、图像字幕、语言模型等。
 
@@ -93,7 +106,7 @@ RNN的输入通常是one-hot编码或词向量，但在某些情况下，会与�
 
 与RNN类似，递归神经网络是对序列数据建模的自然机制。这是因为语言可以被视为递归结构，其中单词和子短语构成层次结构中其他更高级别的短语。在这种结构中，非终端节点由其所有子节点的表示来表示。下图说明了一个简单的递归神经网络：
 
-![simple recursive neural network](image5.png)
+![simple recursive neural network](images/image5.png)
 
 在基本的递归神经网络形式中，组合函数（即，网络）以自底向上的方式组合成分以计算高级短语的表示（参见上图）。在变体[MV-RNN](https://ai.stanford.edu/~ang/papers/emnlp12-SemanticCompositionalityRecursiveMatrixVectorSpaces.pdf)中，单词由矩阵和向量表示，这意味着网络学习的参数表示每个成分（单词或短语）的矩阵。另一种变体，[递归神经张量网络（RNTN）](https://skymind.ai/wiki/recursive-neural-tensor-network)，使得输入向量之间能够进行更多的交互，从而避免像MV-RNN那样的大参数。递归神经网络具有灵活性，并且它们已经与LSTM单元结合以处理诸如梯度消失之类的问题。
 
@@ -128,7 +141,7 @@ RNN的输入通常是one-hot编码或词向量，但在某些情况下，会与�
 
 众所周知，标准的句子自动编码器由于无约束的潜在空间而不能生成逼真的句子。VAE对隐藏的潜在空间施加先验分布，使模型能生成适当的样本。VAE由编码器和生成器网络组成，其将输入编码到潜在空间中，然后从潜在空间中生成样本。训练目标是在生成模型下最大化观测数据的对数似然的变分下界。下图说明了用于句子生成的基于RNN的VAE：
 
-![RNN-based VAE](image6.png)
+![RNN-based VAE](images/image6.png)
 
 生成模型对于许多NLP任务是有用的，并且它们在本质上是灵活的。例如，基于RNN的VAE生成模型被提出用于产生比标准自动编码器更多样化和格式良好的句子。其他模型允许将结构化变量（例如，时态和情绪）合并到潜在代码中，以产生似乎合理的句子。
 
