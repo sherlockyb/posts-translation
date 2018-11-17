@@ -157,6 +157,6 @@ GAN由两个相互竞争的网络——生成器和鉴别器组成，也被用�
 
 到目前为止，我们现在已经知道了基于神经网络的模型（如CNN和RNN）的能力和有效性。我们也意识到将强化学习、无监督方法和深度生成模式应用于复杂的NLP任务（如视觉QA和机器翻译）的可能性。注意力机制和记忆增强网络在扩展基于神经的NLP模型的能力方面是强大的。下一波基于语言的学习算法将带来更大的能力，如常识和建模复杂的人类行为。
 
-***注意：***我们把这个总结的在线版本放在一个专门的网址上（[nlpoverview.com](https://nlpoverview.com/)）。与社区一起，我们将继续更新这个[项目](https://github.com/omarsar/nlp_overview)。
+***注意：*** 我们把这个总结的在线版本放在一个专门的网址上（[nlpoverview.com](https://nlpoverview.com/)）。与社区一起，我们将继续更新这个[项目](https://github.com/omarsar/nlp_overview)。
 
-***参考：***“[Recent Trends in Deep Learning Based Natural Language Processing](https://arxiv.org/abs/1708.02709)”——Tom Young, Devamanyu Hazarika, Soujanya Poria, and Erik Cambria. IEEE Computational Intelligence Magazine, 2018.
+***参考：*** “[Recent Trends in Deep Learning Based Natural Language Processing](https://arxiv.org/abs/1708.02709)”——Tom Young, Devamanyu Hazarika, Soujanya Poria, and Erik Cambria. IEEE Computational Intelligence Magazine, 2018.
