@@ -5,7 +5,21 @@
 >
 > 译者：by [sherlockyb](https://github.com/sherlockyb)
 
-[toc]
+**目录**
+
+* [Apache-Kafka中的消息压缩](#apache-kafka中的消息压缩)
+* [何时该使用压缩](#何时该使用压缩)
+* [Kafka 中的消息压缩](#kafka-中的消息压缩)
+* [Kafka 中支持的压缩类型](#kafka-中支持的压缩类型)
+* [如何启用压缩](#如何启用压缩)
+   * [Broker 和 Topic 级别的压缩设置](#broker-和-topic-级别的压缩设置)
+   * [在 Kafka producer 应用程序中启用压缩](#在-kafka-producer-应用程序中启用压缩)
+   * [使 Kafka 压缩更有效](#使-kafka-压缩更有效)
+* [测试并实现 Kafka 压缩的好处](#测试并实现-kafka-压缩的好处)
+   * [Kafka 的 dump-log-segments 工具](#kafka-的-dump-log-segments-工具)
+   * [检查物理磁盘存储](#检查物理磁盘存储)
+   * [我们的测试结果](#我们的测试结果)
+* [总结和下一步](#总结和下一步)
 
 如今，Apache Kafka 承载着企业的命脉 —— 数据或事件。随着 Kafka 支持越来越多的功能，流经 Kafka 的数据量也在增加。
 
