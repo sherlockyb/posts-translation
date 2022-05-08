@@ -74,6 +74,10 @@ Kafka 支持消息在传递时压缩，好处有两个：
 
 唯一的折中就是略高的 CPU 使用率。
 
+下图直观地展示了 Kafka 是如何压缩消息的，以及由于压缩，Kafka 服务器存储了多少消息，
+
+![kafka-compression](images/kafka-compression.jpg)
+
 # Kafka 中支持的压缩类型
 
 Kafka 支持四种主要的压缩类型：
